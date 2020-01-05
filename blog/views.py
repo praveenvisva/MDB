@@ -24,10 +24,11 @@ class MovieDetailView(DetailView):
     model = Movie
 
 
-class ReviewListView(ListView):
+class ReviewListView(LoginRequiredMixin, ListView):
     model = Review
     context_object_name = 'reviews'
     ordering = ['-date_added']
+    allow_empty = False
 
     def get_queryset(self):
         if 'pk' in self.kwargs:
@@ -80,26 +81,13 @@ def downvote(request, movie_id):
 
 def recommendation(request):
     user = request.user
-    preference = Preference.objects.get(user=user)
-    genre = preference.genres
-    if not genre:
+    try:
+        preference = Preference.objects.get(user=user)
+    except Preference.DoesNotExist:
+        preference = None
+    if not preference:
         messages.warning(request, "Preference is not set")
         return redirect('preference')
+    genre = preference.genres
     context = {'recommendation': Movie.objects.filter(genres=genre).order_by('-rating')}
     return render(request, template_name='blog/recommendation.html', context=context)
-
-# class RecommendationListView(LoginRequiredMixin, ListView):
-#     model = Movie
-#     context_object_name = 'recommendation'
-#     ordering = ['-rating']
-#
-#     def get_queryset(self):
-#         user = self.request.user
-#         return Movie.objects.filter(genre=user.genres)
-#
-#     def get_context_data(self, **kwargs):
-#         context = super(ReviewListView, self).get_context_data(**kwargs)
-#         movie_name = Review.objects.filter(movie=self.kwargs['pk']).first()
-#         movie_name = movie_name.movie
-#         context['movie_name'] = movie_name
-#         return context

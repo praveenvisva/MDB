@@ -11,6 +11,7 @@
               <small><a href="{% url 'upvote' object.id %}">upvote: </a>{{ object.upvote }}</small>
               <small><a href="{% url 'downvote' object.id%}">downvote: </a>{{ object.downvote }}</small>
               <small><a href="{% url 'review-list' object.id %}">Reviews</a></small>
+              <small><a href="{% url 'review-create' object.id %}">Write Review</a></small>
         </div>
       </div>
     </article>
