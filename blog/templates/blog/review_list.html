@@ -1,6 +1,8 @@
 {% extends "blog/base.html" %}
 {% block content %}
     <h1>{{ movie_name }}</h1>
+    <br>
+    <h2>User Reviews</h2>
     {% for review in reviews %}
         <article class="media content-section">
           <div class="media-body">

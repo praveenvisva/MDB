@@ -3,6 +3,7 @@ from .models import Movie, Review
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, DetailView, CreateView
+from django.http import HttpResponseRedirect
 
 
 def home(request):
@@ -21,7 +22,7 @@ class MovieDetailView(DetailView):
     model = Movie
 
 
-class ReviewListView( ListView):
+class ReviewListView(ListView):
     model = Review
     context_object_name = 'reviews'
     ordering = ['-date_added']
@@ -57,3 +58,17 @@ def about(request):
 def toprated(request):
     context = {'toprated': Movie.objects.order_by('-rating')}
     return render(request, template_name='blog/toprated.html', context=context)
+
+
+def upvote(request, movie_id):
+    movie = Movie.objects.get(id=movie_id)
+    movie.upvote += 1
+    movie.save()
+    return redirect('blog-home')
+
+
+def downvote(request, movie_id):
+    movie = Movie.objects.get(id=movie_id)
+    movie.downvote += 1
+    movie.save()
+    return redirect('blog-home')

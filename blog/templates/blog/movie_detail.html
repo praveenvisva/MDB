@@ -8,8 +8,8 @@
              <a class="mr-2">Rating: {{ object.rating }}</a>
               <a class="mr-2">Genre: {{ object.genres }}</a>
             <small>Released: {{ object.date_added }}</small>
-              <small>Upvotes: {{ object.upvote }}</small>
-              <small>Downvotes: {{ object.downvote }}</small>
+              <small><a href="{% url 'upvote' object.id %}">upvote: </a>{{ object.upvote }}</small>
+              <small><a href="{% url 'downvote' object.id%}">downvote: </a>{{ object.downvote }}</small>
               <small><a href="{% url 'review-list' object.id %}">Reviews</a></small>
         </div>
       </div>
