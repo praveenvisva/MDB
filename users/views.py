@@ -1,9 +1,10 @@
-from django.shortcuts import render
-from django.shortcuts import redirect
 from django.contrib import messages
-from .forms import UserRegisterForm, PreferenceForm
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import ListView, DetailView, CreateView
+from django.shortcuts import redirect
+from django.shortcuts import render
+from django.views.generic import CreateView, UpdateView
+
+from .forms import UserRegisterForm
 from .models import Preference
 
 
@@ -29,7 +30,7 @@ class PreferenceCreateView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
-class PreferenceUpdateView(LoginRequiredMixin, CreateView):
+class PreferenceUpdateView(LoginRequiredMixin, UpdateView):
     model = Preference
     fields = ['genres']
     template_name = 'users/preference.html'

@@ -5,11 +5,7 @@ from .models import Preference
 
 
 class UserRegisterForm(UserCreationForm):
-    OPTIONS = [("Action", "Action"), ("Thriller", "Thriller"), ("Sci-Fi", "Sci-Fi"),
-               ("War", "War")]
     email = forms.EmailField()
-    genres = forms.MultipleChoiceField(
-        choices=OPTIONS, widget=forms.CheckboxSelectMultiple(), required=True)
 
     class Meta:
         model = User
@@ -18,7 +14,7 @@ class UserRegisterForm(UserCreationForm):
 
 class PreferenceForm(forms.ModelForm):
     OPTIONS = [("Action", "Action"), ("Thriller", "Thriller"), ("Sci-Fi", "Sci-Fi"),
-               ("War", "War")]
+               ("War", "War"), ("Romance", "Romance"), ("Drama", "Drama")]
     genres = forms.MultipleChoiceField(
         choices=OPTIONS, widget=forms.CheckboxSelectMultiple(), required=True)
 

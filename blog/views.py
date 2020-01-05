@@ -74,3 +74,4 @@ def downvote(request, movie_id):
     movie.downvote += 1
     movie.save()
     return redirect('blog-home')
+
