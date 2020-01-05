@@ -1,0 +1,14 @@
+{% extends "blog/base.html" %}
+{% block content %}
+    <h1>{{ movie_name }}</h1>
+    {% for review in reviews %}
+        <article class="media content-section">
+          <div class="media-body">
+            <p class="article-content">{{ review.content }}</p>
+              <small>posted on: {{review.date_added}}</small>
+              <small>posted by: {{review.author}}</small>
+            </div>
+        </article>
+    {% endfor %}
+<footer><a href="{% url 'review-create' movie_name.id %}">Write Review</a></footer>
+{% endblock content %}
