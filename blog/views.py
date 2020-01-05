@@ -1,9 +1,11 @@
-from django.shortcuts import render, redirect, get_object_or_404
-from .models import Movie, Review
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import render, redirect
 from django.views.generic import ListView, DetailView, CreateView
-from django.http import HttpResponseRedirect
+from django.contrib import messages
+
+from .models import Movie, Review
+from users.models import Preference
 
 
 def home(request):
@@ -75,3 +77,29 @@ def downvote(request, movie_id):
     movie.save()
     return redirect('blog-home')
 
+
+def recommendation(request):
+    user = request.user
+    preference = Preference.objects.get(user=user)
+    genre = preference.genres
+    if not genre:
+        messages.warning(request, "Preference is not set")
+        return redirect('preference')
+    context = {'recommendation': Movie.objects.filter(genres=genre).order_by('-rating')}
+    return render(request, template_name='blog/recommendation.html', context=context)
+
+# class RecommendationListView(LoginRequiredMixin, ListView):
+#     model = Movie
+#     context_object_name = 'recommendation'
+#     ordering = ['-rating']
+#
+#     def get_queryset(self):
+#         user = self.request.user
+#         return Movie.objects.filter(genre=user.genres)
+#
+#     def get_context_data(self, **kwargs):
+#         context = super(ReviewListView, self).get_context_data(**kwargs)
+#         movie_name = Review.objects.filter(movie=self.kwargs['pk']).first()
+#         movie_name = movie_name.movie
+#         context['movie_name'] = movie_name
+#         return context

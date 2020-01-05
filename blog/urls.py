@@ -9,5 +9,6 @@ urlpatterns = [
     path('upvote/<int:movie_id>/', views.upvote, name='upvote'),
     path('downvote/<int:movie_id>/', views.downvote, name='downvote'),
     path('about/', views.about, name='blog-about'),
-    path('toprated/', views.toprated, name='blog-toprated')
+    path('toprated/', views.toprated, name='blog-toprated'),
+    path('recommendation/', views.recommendation, name='recommendation')
 ]

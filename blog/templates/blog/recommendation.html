@@ -1,0 +1,14 @@
+{% extends "blog/base.html" %}
+{% block content %}
+    {% for recom in recommendation %}
+        <article class="media content-section">
+          <div class="media-body">
+            <h2><a class="article-title" href="{% url 'movie-detail' recom.id %}">{{ recom.title }}</a></h2>
+              <div class="article-metadata">
+                 <a class="mr-2">Rating: {{ recom.rating }}</a>
+                  <a class="mr-2">Genre: {{ recom.genres }}</a>
+            </div>
+          </div>
+        </article>
+    {% endfor %}
+{% endblock content %}
