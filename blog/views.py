@@ -60,6 +60,7 @@ def toprated(request):
     return render(request, template_name='blog/toprated.html', context=context)
 
 
+@login_required()
 def upvote(request, movie_id):
     movie = Movie.objects.get(id=movie_id)
     movie.upvote += 1
@@ -67,6 +68,7 @@ def upvote(request, movie_id):
     return redirect('blog-home')
 
 
+@login_required()
 def downvote(request, movie_id):
     movie = Movie.objects.get(id=movie_id)
     movie.downvote += 1
