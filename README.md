@@ -1,0 +1,3 @@
+MDB
+Movie database like IMDB where user can login,write reviews,get recommendation and set preference.
+Application stack: Python 3.5.2,mysql 5.7.28
